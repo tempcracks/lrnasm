@@ -13,14 +13,14 @@ _start:
     int 0x80            ; call kernel
 
     ; Power off the system
-    mov eax, 60         ; syscall number for sys_exit
-    xor ebx, ebx        ; exit code 0
-    int 0x80            ; call kernel
+    ;mov eax, 60         ; syscall number for sys_exit
+    ;xor ebx, ebx        ; exit code 0
+    ;int 0x80            ; call kernel
 
     ; Alternatively, you can use reboot syscall to power off
-    ; mov eax, 169        ; syscall number for sys_reboot
-    ; mov ebx, 0          ; magic number (0 for now)
-    ; mov ecx, 0          ; command (0 = power off)
-    ; mov edx, 0          ; argument (not used)
-    ; int 0x80            ; call kernel
+     mov eax, 169        ; syscall number for sys_reboot
+     mov ebx, 0          ; magic number (0 for now)
+     mov ecx, 0          ; command (0 = power off)
+     mov edx, 0          ; argument (not used)
+     int 0x80            ; call kernel
 
