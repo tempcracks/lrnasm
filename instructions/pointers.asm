@@ -6,7 +6,7 @@ person:
   .long 0x33333333 #.salary (offset 8)
 
 .text
-movl $person, %ebx #ebx = ptr to struct
+movl $person(%rip), %ebx #ebx = ptr to struct
 
 movl 0(%ebx), %eax #eax = person->id
 movl 4(%ebx), %eax #eax = person->age
@@ -49,7 +49,7 @@ values: .long 0x11111111, 0x222222222, 0x33333333
 ptr_array: .long values, values+4, values+8 # array of ptr's
 
 .text
-movl $ptr_array, %esi #esi = begin of array ptr's
+movl ptr_array(%rip), %esi #esi = begin of array ptr's
 movl (%esi), %edi #edi = fist ptr (on values[0])
 movl (%edi), %eax #eax = values[0] = 0x11111111
 
