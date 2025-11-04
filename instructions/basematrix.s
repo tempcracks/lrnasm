@@ -14,3 +14,15 @@ element_size = 4
 #access to matrix[i][j] - rdi =i , rsi = j
 access_matrix_element:
   # i * cols + j
+  movq %rdi, %rax
+  imulq $cols, %rax
+  addq %rsi, %rax
+
+  #matrix + (i * cols + j) * element_size
+  leaq matrix(%rip), %rcx
+  movq %rax, %rdx
+  imulq $element_size, %rdx
+  movss (%rcx, %rdx), %xmm0 #load float
+
+  ret
+  
