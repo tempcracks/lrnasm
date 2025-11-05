@@ -26,3 +26,35 @@ access_matrix_element:
 
   ret
   
+#multiple matrix to scalar
+.globl matrix_scalar_multiply
+matrix_scalar_multiply:
+  #rdi = matrix, rsi = rows, rdx = cols, xmm0 = scalar
+  movq %rdi, %r8 #matrix
+  movq %rsi, %r9 #rows
+  movq %rdx, %r10 #cols
+
+  xorq %rcx, %rcx  #i =  0
+
+row_loop:
+  xorq %r11, %r11 #j=0
+col_loop:
+  #index = i* cols+j
+  movq %rcx, %rax
+  imulq %r10, %rax
+  addq %r11, %rax
+
+  #load elementl
+  movss (%r8, %rax, 4), %xmm1
+  mulss %xmm0, %xmm1 #mul to scalar
+  movss %xmm1, (%r8, %rax, 4) #save
+
+  incq %r11
+  cmpq %r10, %r11
+  jl col_loop
+
+  incq %rcx
+  cmpq %r9, %rcx
+  jl row_loop
+
+  ret
